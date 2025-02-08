@@ -12,8 +12,8 @@
    <body>
         <h3 style="text-align:center;margin-top:15%;">Select Any Option From Given Below</h3>
         <div style="text-align:center;margin-top: 2%;">
-            <button onclick="AddRecord()" type="button" class="btn btn-primary btn-lg">Create Record</button>
-            <button onclick="ShowRecord()" type="button" class="btn btn-primary btn-lg">Show Record</button>
+            <button onclick="BlogRecord()" type="button" class="btn btn-primary btn-lg">Blog</button>
+            <button onclick="ShowRecord()" type="button" class="btn btn-primary btn-lg">Users</button>
         </div>
    </body>
    <script>
@@ -21,9 +21,9 @@
         {
             window.location.href = "/ShowRecord";
         }
-        function AddRecord()
+        function BlogRecord()
         {
-            window.location.href = "/AddRecord";
+            window.location.href = "/BlogRecord";
         }
    </script>
 </html>
