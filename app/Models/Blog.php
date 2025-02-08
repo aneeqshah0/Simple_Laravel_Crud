@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Crud extends Model
+class Blog extends Model
 {
     use HasFactory;
-    public function blogs()
+    public function user()
     {
-        return $this->hasMany(Blog::class, 'user_id', 'id');
+        return $this->belongsTo(Crud::class, 'user_id', 'id');
     }
 }
