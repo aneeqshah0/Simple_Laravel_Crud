@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Crud;
 use App\Models\Blog;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash; 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -97,5 +100,51 @@ class CrudController extends Controller
     {
         $User=Crud::find($id);
         return view('UpdateRecord',compact('User'));
+    }
+    public function LoginForm()
+    {
+        return view('LoginForm');
+    }
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:4',
+        ]);
+        $user = Crud::where('email', $request->email)->first();
+        if ($user && $request->password === $user->password) {
+            session([
+                'user_id' => $user->id,
+                'user_email' => $user->email
+            ]);
+            return redirect()->route('BlogRecord');
+        }        
+        return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+    public function logout(Request $request)
+    {
+        session()->flush();
+        return redirect('/');
+    }
+    public function OpenSpecificBlog($id)
+    {
+        $blogs = Blog::find($id);
+        $comment = Comment::where('blog_id', $id)->with('user')->get();
+        return view('OpenSpecificBlog', compact('blogs', 'comment'));
+    }
+    public function AddComment(Request $request, $blog_id)
+    {
+        if (!session()->has('user_id')) {
+            return redirect()->back()->withErrors(['error' => 'You must be logged in to comment.']);
+        }
+        $request->validate([
+            'comment_text' => 'required|string|max:500',
+        ]);
+        Comment::create([
+            'comment_text' => $request->comment_text,
+            'blog_id' => $blog_id,
+            'user_id' => session('user_id'),
+        ]);
+        return redirect()->back()->with('success', 'Comment added successfully!');
     }
 }
