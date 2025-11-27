@@ -1,5 +1,7 @@
 <?php
 
+// This file defines the 'inspire' Artisan command, which displays a random motivational quote hourly.
+
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
