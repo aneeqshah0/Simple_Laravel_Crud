@@ -3,6 +3,7 @@
 use App\Http\Controllers\CrudController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/',[CrudController::class,'Home']);
 Route::get('/AddBlog',[CrudController::class,'AddBlog']);
 Route::get('/CreateBlogRecord',[CrudController::class,'CreateBlogRecord']);
